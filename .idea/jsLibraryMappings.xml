@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$" libraries="{Chart.js, bootstrap.bundle, dataTables.responsive, datatables.net-bs4, jquery-3.3.1, jquery.dataTables, metismenu, responsive.bootstrap, select2, sweetalert2, toastr.js}" />
+  </component>
+</project>

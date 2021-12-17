@@ -1,0 +1,64 @@
+{%  extends 'masterpage.html' %}
+{% load static %}
+
+{% block mainblock %}
+    <div class="app-page-title">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-heading">
+                                <div class="page-title-icon">
+                                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+                                </div>
+                                <div>Lista wszystkich klientów firmy
+                                    <div class="page-title-subheading">Listę klientów możesz segregować według własnego uznania, tak samo wyszukiwać klientów, i sprawdzać ich statystyki.
+                                        <br> W nawiasach jest podana ilość razy. <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page-title-actions">
+                            </div>
+                        </div>
+    </div>
+
+
+
+<div class="app-main__inner">
+
+    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#id</th>
+                                    <th>Imię i Nazwisko</th>
+                                    <th>Sprzedawca</th>
+                                    <th>Menadżer</th>
+                                    <th>Retencja</th>
+                                    <th>Biuro</th>
+{#                                    <th>Data rejestracji</th>#}
+{#                                    <th>Wpłaty</th>#}
+{#                                    <th>Wypłaty</th>#}
+{#                                    <th>Bilans</th>#}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {%  for c in clients_list %}
+                                <tr>
+                                    <td>{{ c.id }}</td>
+                                    <td>{{ c.client_name }} {{ c.client_name }}</td>
+                                    <td>{{ c.client_salesman }}</td>  <--- Tutaj potrzebuje z porównać.
+                                    <td>{{ c.client_phone }}</td>
+                                    <td>{{ c.client_email }}</td>
+                                    <td>{{ c.client_reg_time }}</td>
+
+                                    {% endfor%}
+                                </tr>
+
+                                </tbody>
+                                <tfoot>
+
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}
