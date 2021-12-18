@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "git": "^0.1.5",
     "sweetalert2": "^11.3.0"
   }
 }

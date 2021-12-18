@@ -26,7 +26,7 @@ def new_client(request):
 
         data = Client(
             client_name=nm, client_lastname=ln, client_phone=ph,
-            client_email=em, client_salesman=ss, client_reg_time=f_date,
+            client_email=em, client_salesman=Employees.objects.get(pk=ss), client_reg_time=f_date,
             client_bank=f_bank
         )
 
@@ -41,6 +41,7 @@ def new_client(request):
         )
 
         data.save()
+
         sweetify.info(request, 'Gratulacje!',
                       text='Dobra robota, właśnie dodałeś klienta: ' + nm + ' ' + ln + '  - Klient musi zostać zaakceptowany przez menagera.')
 
@@ -75,8 +76,5 @@ def client_list(request):
     employees = Employees.objects.all()
     clients_list = Client.objects.all()
 
-    sales_man = Client.client_salesman == Employees.pk
-
     return render(request, 'client_list.html', {'clients_list': clients_list,
-                                                'employees': employees,
-                                                'sales_man': sales_man})
+                                                'employees': employees})

@@ -30,14 +30,14 @@
                                 <tr>
                                     <th>#id</th>
                                     <th>Imię i Nazwisko</th>
+                                    <th>Email</th>
                                     <th>Sprzedawca</th>
-                                    <th>Menadżer</th>
                                     <th>Retencja</th>
                                     <th>Biuro</th>
-{#                                    <th>Data rejestracji</th>#}
-{#                                    <th>Wpłaty</th>#}
-{#                                    <th>Wypłaty</th>#}
-{#                                    <th>Bilans</th>#}
+                                    <th>Data rejestracji</th>
+                                    <th>Wpłaty</th>
+                                    <th>Wypłaty</th>
+                                    <th>Bilans</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -45,11 +45,14 @@
                                 <tr>
                                     <td>{{ c.id }}</td>
                                     <td>{{ c.client_name }} {{ c.client_name }}</td>
-                                    <td>{{ c.client_salesman }}</td>  <--- Tutaj potrzebuje z porównać.
-                                    <td>{{ c.client_phone }}</td>
                                     <td>{{ c.client_email }}</td>
+                                    <td>{{ c.client_salesman.employees_name }} {{ c.client_salesman.employees_lastname }}</td>
+                                    <td>{{ c.client_retention }}</td>
+                                    <td>{{ c.client_phone }}</td>
                                     <td>{{ c.client_reg_time }}</td>
-
+                                    <td>10 000€</td>
+                                    <td>2 000€</td>
+                                    <td>5500 €</td>
                                     {% endfor%}
                                 </tr>
 

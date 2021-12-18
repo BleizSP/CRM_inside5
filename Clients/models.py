@@ -2,6 +2,9 @@ from django.db import models
 
 
 # Create your models here.
+from Employees.models import Employees
+
+
 class Client(models.Model):
     def __str__(self):
         return self.client_name + " " + self.client_lastname
@@ -14,6 +17,7 @@ class Client(models.Model):
     client_lastname = models.CharField(max_length=10)
     client_phone = models.DecimalField(max_digits=12, decimal_places=0)
     client_email = models.EmailField(max_length=20, null=True)
-    client_salesman = models.CharField(max_length=20, null=True)
+    client_salesman = models.ForeignKey(Employees, on_delete=models.CASCADE)
+    client_retention = models.IntegerField()
     client_reg_time = models.DateField(blank=True, null=True)
     client_bank = models.CharField(max_length=15, null=True)
