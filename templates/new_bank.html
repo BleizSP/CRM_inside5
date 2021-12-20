@@ -1,0 +1,126 @@
+
+{%  extends 'masterpage.html' %}
+{% load static %}
+
+<script>
+    $(document).ready(function() {
+  $("select").change(function() {
+    $(this).find("option:selected").each(function() {
+      var optionValue = $(this).attr("value");
+      if (optionValue) {
+        $(".box").not("." + optionValue).hide();
+        $("." + optionValue).show();
+      } else {
+        $(".box").hide();
+      }
+    });
+  }).change();
+});
+</script>
+
+{% block mainblock %}
+    <div class="app-page-title">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-heading">
+                                <div class="page-title-icon">
+                                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+                                </div>
+                                <div>Dodaj nowy bank:
+                                    <div class="page-title-subheading">Uzupełnij wszystkie potrzebne dane, a bank lub pośrednik zostanie dodana do bazy danych.</div>
+                                </div>
+                            </div>
+                            <div class="page-title-actions">
+                            </div>
+                        </div>
+    </div>
+
+<div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h5 class="card-title">Uzupełnij dane nowego banku:</h5>
+                            <div class="divider"></div>
+                            Każdy bank lub pośrednik automatycznie zostanie dodany do systemu.
+                        <br>Jeżeli poniżej zostaną dodane dane banku, automatycznie zostaną dodane do jego nazwy 4 ostatnie cyfry konta bankowego.
+                            <div class="divider"></div>
+                            <form id="signupForm" class="col-md-10 mx-auto" method="post" action="">
+                                {%  csrf_token %}
+                                <div class="form-group">
+                                    <label for="firstname">Nazwa banku, pośrednika lub krypto:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Wpisz nazwę banku lub pośrednika"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Rodzaj operatora:</label>
+                                    <div>
+                                    <select class="multiselect-dropdown form-control" name='meth' id="meth">
+                                        <option value="" disabled selected>Wybierz metode płatności</option>
+
+                                        <option value="bank">Bank</option>
+                                        <option value="posrednik">Pośrednik</option>
+                                        <option value="crypto">Kryptowaluty</option>
+                                    </select>
+                                    </div>
+                                </div>
+
+                                <div id="check" class="bank box">
+                                    <div class="form-group">
+                                    <label for="firstname">Dodaj IBAN banku:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="iban" name="iban" placeholder="Dodaj numer rachunku bankowego"/>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div id="check" class="bank box">
+                                    <div class="form-group">
+                                    <label for="firstname">Wpisz swift:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="swift" name="swift" placeholder="Wpisz swift banku"/>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div id="check" class="bank box">
+                                    <div class="form-group">
+                                    <label for="firstname">Wpisz kraj banku:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="country" name="country" placeholder="Wpisz kraj banku"/>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div id="check" class="bank box">
+                                    <div class="form-group">
+                                    <label for="firstname">Wpisz adres banku:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="adress" name="adress" placeholder="Wpisz adress banku"/>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div id="check" class="posrednik box">
+                                    <div class="form-group">
+                                    <label for="firstname">Wpisz na jakie konto założony:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="account" name="account" placeholder="Wpisz konto właściciela"/>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div id="check" class="crypto box">
+                                    <div class="form-group">
+                                    <label for="firstname">Wpisz adres walletu:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="wallet" name="wallet" placeholder="Wpisz wallet"/>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" name="signup" value="Sign up">Dodaj metode płatności!</button>
+                                </div>
+                            </form>
+                        </div>
+</div>
+{% endblock %}

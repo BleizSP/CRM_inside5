@@ -1077,10 +1077,75 @@
                             >
                                 <a href="#">
                                     <i class="metismenu-icon pe-7s-plugin"></i>
-                                    Podsumowanie Pracownicy
+                                    Podsumowanie Pracowników
                                     <i class="metismenu-state-icon pe-7s-angle-right caret-left"></i>
                                 </a>
                             </li>
+
+                            <li class="app-sidebar__heading">Finanse</li>
+                            <li>
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-diamond"></i>
+                                    Zarządzaj bankami
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'new_bank' %}">
+                                            <i class="metismenu-icon">
+                                            </i>Dodaj bank
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="regular.html">
+                                            <i class="metismenu-icon">
+                                            </i>Lista banków
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-car"></i>
+                                    Zarządzaj prowizjami
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                 <ul>
+                                    <li>
+                                        <a href="data-tables.html">
+                                            <i class="metismenu-icon">
+                                            </i>Prowizja biur
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="regular.html">
+                                            <i class="metismenu-icon">
+                                            </i>Prowizja pracowników
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="grid.html">
+                                            <i class="metismenu-icon">
+                                            </i>Indywidualne prowizje
+                                        </a>
+                                    </li>
+                                </ul>
+                                </li>
+                            <li>
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-display2"></i>
+                                    Rozliczenia
+                                    <i class="metismenu-state-icon pe-7s-angle-right caret-left"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-display2"></i>
+                                    Oczekujące operacje
+                                    <i class="metismenu-state-icon pe-7s-angle-right caret-left"></i>
+                                </a>
+                            </li>
+
                             <li class="app-sidebar__heading">Biura</li>
                             <li>
                                 <a href="#">
@@ -1125,7 +1190,7 @@
                             </li>
                             <li class="app-sidebar__heading">Pracownicy</li>
                             <li>
-                                <a href="{% url 'new_employees' %}">
+                                <a href="{% url 'new_employee' %}">
                                     <i class="metismenu-icon pe-7s-graph">
                                     </i>Dodaj pracownika
                                 </a>
@@ -1149,11 +1214,6 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="profile-boxes.html">
-                                    <i class="metismenu-icon pe-7s-id">
-                                    </i>Prowizje pracowników
-                                </a>
-                            </li>
 
                             <li class="app-sidebar__heading">Klienci</li>
                             <li>
@@ -1164,7 +1224,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{% url 'new_operation' %}">
                                     <i class="metismenu-icon pe-7s-joy"></i>
                                     Wpłata/Wypłata
                                     <i class="metismenu-state-icon pe-7s-angle-right caret-left"></i>
@@ -1782,6 +1842,9 @@
 
 <!--Bootstrap Tables-->
 <script src="{% static '/assets/js/vendors/tables.js' %}"></script>
+
+<script src="{% static '/assets/js/scripts-init/hide-div.js' %}"></script>
+
 
 <!--Tables Init-->
 <script src="{% static '/assets/js/scripts-init/tables.js' %}"></script>

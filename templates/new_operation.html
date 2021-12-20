@@ -9,8 +9,8 @@
                                 <div class="page-title-icon">
                                     <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                                 </div>
-                                <div>Dodaj nowego klienta
-                                    <div class="page-title-subheading">Uzupełnij wszystkie potrzebne dane, a klient zostanie dodany do bazy danych.</div>
+                                <div>Dodaj nową operacje przeprowadzoną z klientem:
+                                    <div class="page-title-subheading">Uzupełnij wszystkie potrzebne dane, a operacja zostanie dodana do bazy danych.</div>
                                 </div>
                             </div>
                             <div class="page-title-actions">
@@ -20,37 +20,26 @@
 
 <div class="main-card mb-3 card">
                         <div class="card-body">
-                            <h5 class="card-title">Uzupełnij dane klienta:</h5>
+                            <h5 class="card-title">Uzupełnij dane nowej operacji:</h5>
                             <div class="divider"></div>
-                            Każdy klient który zostanie dodany, poprzez formularz jest w statusie "Do sprawdzenia", dopiero po zatwierdzeniu zostaje on doliczony do wyniku biura.
+                            Każda operacja która zostanie dodana, poprzez formularz jest w statusie "Do sprawdzenia", dopiero po zatwierdzeniu zostaje on doliczony do wyniku biura.
                             <div class="divider"></div>
                             <form id="signupForm" class="col-md-10 mx-auto" method="post" action="">
                                 {%  csrf_token %}
                                 <div class="form-group">
-                                    <label for="firstname">Imię:</label>
+                                    <label for="client">Wyszukaj klienta:</label>
                                     <div>
-                                        <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Imię klienta"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="lastname">Nazwisko:</label>
-                                    <div>
-                                        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Nazwisko klienta"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="username">Numer telefonu:</label>
-                                    <div>
-                                        <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Numer telefonu"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="email">Email:</label>
-                                    <div>
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Email"/>
+                                    <select class="multiselect-dropdown form-control" name='client' id="client">
+                                        <option value="" disabled selected>Wybierz klienta</option>
+                                        <optgroup label="Biuro 1">
+                                            {% for e in client %}
+                                            <option value="{{ e.id }}">{{ e.id }}: {{ e.name }} {{ e.lastname }}</option>
+                                            {% endfor %}
+                                        </optgroup>
+                                        <optgroup label="Biuro 2">
+                                            <option value="CA">California</option>
+                                        </optgroup>
+                                    </select>
                                     </div>
                                 </div>
 
@@ -64,18 +53,32 @@
                                             <option value="{{ e.id }}">{{ e.id }}: {{ e.name }} {{ e.lastname }}</option>
                                             {% endfor %}
                                         </optgroup>
-{#                                        <optgroup label="Biuro 2">#}
-{#                                            <option value="CA">California</option>#}
-{#                                            <option value="NV">Nevada</option>#}
-{#                                            <option value="OR">Oregon</option>#}
-{#                                            <option value="WA">Washington</option>#}
-{#                                        </optgroup>#}
+                                        <optgroup label="Biuro 2">
+                                            <option value="CA">California</option>
+                                        </optgroup>
+                                    </select>
+                                    </div>
+                                </div>
+
+                            <form id="signupForm" class="col-md-10 mx-auto" method="post" action="">
+                                {%  csrf_token %}
+                                <div class="form-group">
+                                    <label for="client">Rodzaj transakcji:</label>
+                                    <div>
+                                    <select class="multiselect-dropdown form-control" name='status' id="status">
+                                        <option value="" disabled selected>Wybierz rodzaj transakcji</option>
+                                            {% for e in status %}
+                                                {% if e.id > 1 and e.id < 4%}
+                                                <option value="{{ e.id }}">{{ e.status }}</option>
+                                                {% endif %}
+
+                                            {% endfor %}
                                     </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="confirm_password">Ile wpłacił klient:</label>
+                                    <label for="confirm_password">Kwota operacji:</label>
                                     <div class="input-group">
                                                     <div class="input-group-prepend"><span class="input-group-text">€</span></div>
                                                     <input placeholder="Wpisz kwotę" name="cash" id="cash" class="form-control" type="number">
@@ -84,7 +87,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="confirm_password">Data zamknięcia klienta:</label>
+                                    <label for="confirm_password">Data operacji:</label>
                                     <div>
                                         <div class="position-relative form-group">
                                             <input name="ftd_date" id="ftd_date" placeholder="Wybierz datę" type="date" class="form-control">
@@ -93,7 +96,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="email">Metoda płatności:</label>
+                                    <label for="email">Jaki bank:</label>
                                     <div>
                                     <select class="multiselect-dropdown form-control" id="ftd_bank" name="ftd_bank">
                                         <option value="" disabled selected>Wybierz bank</option>

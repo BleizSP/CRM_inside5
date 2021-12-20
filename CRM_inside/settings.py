@@ -38,11 +38,8 @@ INSTALLED_APPS = [
 
     # apps
     'crm.apps.CrmConfig',
-    'Clients',
-    'Operation',
     'bootstrap5',
     'sweetify',
-    'Employees',
 ]
 SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 

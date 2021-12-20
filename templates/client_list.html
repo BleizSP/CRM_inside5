@@ -31,10 +31,12 @@
                                     <th>#id</th>
                                     <th>Imię i Nazwisko</th>
                                     <th>Email</th>
+                                    <th>Telefon</th>
                                     <th>Sprzedawca</th>
                                     <th>Retencja</th>
                                     <th>Biuro</th>
                                     <th>Data rejestracji</th>
+                                    <th>FTD</th>
                                     <th>Wpłaty</th>
                                     <th>Wypłaty</th>
                                     <th>Bilans</th>
@@ -44,15 +46,20 @@
                                 {%  for c in clients_list %}
                                 <tr>
                                     <td>{{ c.id }}</td>
-                                    <td>{{ c.client_name }} {{ c.client_name }}</td>
-                                    <td>{{ c.client_email }}</td>
-                                    <td>{{ c.client_salesman.employees_name }} {{ c.client_salesman.employees_lastname }}</td>
-                                    <td>{{ c.client_retention }}</td>
-                                    <td>{{ c.client_phone }}</td>
-                                    <td>{{ c.client_reg_time }}</td>
-                                    <td>10 000€</td>
-                                    <td>2 000€</td>
-                                    <td>5500 €</td>
+                                    <td>{{ c.name }} {{ c.lastname }}</td>
+                                    <td>{{ c.email }}</td>
+                                    <td>{{ c.phone }}</td>
+                                    <td>{{ c.salesman.name }} {{ c.salesman.lastname }}</td>
+                                    <td>{{ c.retention.name }} {{ c.retention.lastname }}</td>
+                                    <td>{{ c.phone }}</td>
+                                    <td>{{ c.reg_time }}</td>
+                                    {% for d in operation %}
+                                        {% if c.id == d.client_id and d.status_id == 4 %}
+                                            <td>{{ d.cash }}</td>
+                                            {% else %}
+                                            <td>Pending</td>
+                                        {% endif %}
+                                    {% endfor %}
                                     {% endfor%}
                                 </tr>
 
