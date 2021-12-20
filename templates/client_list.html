@@ -53,14 +53,8 @@
                                     <td>{{ c.retention.name }} {{ c.retention.lastname }}</td>
                                     <td>{{ c.phone }}</td>
                                     <td>{{ c.reg_time }}</td>
-                                    {% for d in operation %}
-                                        {% if c.id == d.client_id and d.status_id == 4 %}
-                                            <td>{{ d.cash }}</td>
-                                            {% else %}
-                                            <td>Pending</td>
-                                        {% endif %}
+                                    <td>{{ depo.cash }}</td><
                                     {% endfor %}
-                                    {% endfor%}
                                 </tr>
 
                                 </tbody>

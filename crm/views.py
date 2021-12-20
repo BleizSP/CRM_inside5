@@ -1,5 +1,6 @@
 import datetime
 
+from django.db.models import Count, Q, Avg, Sum
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import sweetify
@@ -120,4 +121,4 @@ def client_list(request):
     operation = Operation.objects.all()
 
     return render(request, 'client_list.html', {'clients_list': clients_list,
-                                                'employee': employee, 'operation': operation})
+                                                'employee': employee})
