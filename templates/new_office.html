@@ -1,0 +1,47 @@
+{%  extends 'masterpage.html' %}
+{% load static %}
+
+{% block mainblock %}
+    <div class="app-page-title">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-heading">
+                                <div class="page-title-icon">
+                                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+                                </div>
+                                <div>Dodaj nowe biuro
+                                    <div class="page-title-subheading">Uzupełnij wszystkie potrzebne dane, a nowe biuro zostanie dodane do bazy danych.</div>
+                                </div>
+                            </div>
+                            <div class="page-title-actions">
+                            </div>
+                        </div>
+    </div>
+
+<div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h5 class="card-title">Uzupełnij dane biura:</h5>
+                            <div class="divider"></div>
+                            Każde biuro jest automatycznie dodawane do bazy, w liście biur możesz sprawdzić, ilość pracowników i ich wyniki.
+                            <div class="divider"></div>
+                            <form id="signupForm" class="col-md-10 mx-auto" method="post" action="">
+                                {%  csrf_token %}
+                                <div class="form-group">
+                                    <label for="office_name">Nazwa biura:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="office_name" name="office_name" placeholder="Wpisz nazwe biura"/>
+                                    </div>
+                                </div>
+                                {%  csrf_token %}
+                                <div class="form-group">
+                                    <label for="lastname">Kraj:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="country" name="country" placeholder="Wpisz kraj biura"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" name="signup" value="Sign up">Dodaj biuro!</button>
+                                </div>
+                            </form>
+                        </div>
+</div>
+{% endblock %}

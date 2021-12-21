@@ -8,9 +8,8 @@
                                 <div class="page-title-icon">
                                     <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                                 </div>
-                                <div>Lista wszystkich klientów firmy
-                                    <div class="page-title-subheading">Listę klientów możesz segregować według własnego uznania, tak samo wyszukiwać klientów, i sprawdzać ich statystyki.
-                                        <br> W nawiasach jest podana ilość razy. <br>
+                                <div>Lista wszystkich pracowników firmy
+                                    <div class="page-title-subheading">Listę pracowników możesz segregować według własnego uznania, tak samo wyszukiwać pracowników, i sprawdzać ich statystyki.
                                     </div>
                                 </div>
                             </div>
@@ -31,10 +30,8 @@
                                     <th>#id</th>
                                     <th>Imię i Nazwisko</th>
                                     <th>Email</th>
-                                    <th>Telefon</th>
-                                    <th>Sprzedawca</th>
-                                    <th>Retencja</th>
                                     <th>Biuro</th>
+                                    <th>Menager</th>
                                     <th>Data rejestracji</th>
                                     <th>FTD</th>
                                     <th>Wpłaty</th>
@@ -43,19 +40,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {%  for c in clients_list %}
+                                {%  for c in employee %}
                                 <tr>
                                     <td>{{ c.id }}</td>
                                     <td>{{ c.name }} {{ c.lastname }}</td>
                                     <td>{{ c.email }}</td>
-                                    <td>{{ c.phone }}</td>
-                                    <td>{{ c.salesman.name }} {{ c.salesman.lastname }}</td>
-                                    <td>{{ c.retention.name }} {{ c.retention.lastname }}</td>
-                                    <td>{{ c.phone }}</td>
+                                    <td>Biuro 1</td>
+                                    <td>Manager</td>
                                     <td>{{ c.reg_time }}</td>
-                                    <td>{{ c.operations }} ({{ c.operations.count }})</td>
-                                    <td>{{ c.operations.first }}</td>
-                                    <td></td>
+                                    <td>FTD's</td>
+                                    <td>depo</td>
+                                    <td>wypłaty</td>
+                                    <td>Bilans</td>
                                     {% endfor %}
                                 </tr>
 

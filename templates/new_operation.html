@@ -17,7 +17,7 @@
                             </div>
                         </div>
     </div>
-
+                                {%  csrf_token %}
 <div class="main-card mb-3 card">
                         <div class="card-body">
                             <h5 class="card-title">Uzupełnij dane nowej operacji:</h5>
@@ -30,14 +30,11 @@
                                     <label for="client">Wyszukaj klienta:</label>
                                     <div>
                                     <select class="multiselect-dropdown form-control" name='client' id="client">
-                                        <option value="" disabled selected>Wybierz klienta</option>
+                                        <option id="client" value="" disabled selected>Wybierz klienta</option>
                                         <optgroup label="Biuro 1">
                                             {% for e in client %}
                                             <option value="{{ e.id }}">{{ e.id }}: {{ e.name }} {{ e.lastname }}</option>
                                             {% endfor %}
-                                        </optgroup>
-                                        <optgroup label="Biuro 2">
-                                            <option value="CA">California</option>
                                         </optgroup>
                                     </select>
                                     </div>
@@ -47,7 +44,7 @@
                                     <label for="email">Sprzedawca:</label>
                                     <div>
                                     <select class="multiselect-dropdown form-control" name='salesman' id="salesman">
-                                        <option value="" disabled selected>Wybierz sprzedawcę</option>
+                                        <option value="" id="salesman" disabled selected>Wybierz sprzedawcę</option>
                                         <optgroup label="Biuro 1">
                                             {% for e in employee %}
                                             <option value="{{ e.id }}">{{ e.id }}: {{ e.name }} {{ e.lastname }}</option>
@@ -59,13 +56,10 @@
                                     </select>
                                     </div>
                                 </div>
-
-                            <form id="signupForm" class="col-md-10 mx-auto" method="post" action="">
-                                {%  csrf_token %}
                                 <div class="form-group">
                                     <label for="client">Rodzaj transakcji:</label>
                                     <div>
-                                    <select class="multiselect-dropdown form-control" name='status' id="status">
+                                    <select class="multiselect-dropdown form-control" name='trans' id='trans'>
                                         <option value="" disabled selected>Wybierz rodzaj transakcji</option>
                                             {% for e in status %}
                                                 {% if e.id > 1 and e.id < 4%}
@@ -90,7 +84,7 @@
                                     <label for="confirm_password">Data operacji:</label>
                                     <div>
                                         <div class="position-relative form-group">
-                                            <input name="ftd_date" id="ftd_date" placeholder="Wybierz datę" type="date" class="form-control">
+                                            <input name="date" id="date" placeholder="Wybierz datę" type="date" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -98,9 +92,8 @@
                                 <div class="form-group">
                                     <label for="email">Jaki bank:</label>
                                     <div>
-                                    <select class="multiselect-dropdown form-control" id="ftd_bank" name="ftd_bank">
-                                        <option value="" disabled selected>Wybierz bank</option>
-
+                                    <select class="multiselect-dropdown form-control" id="bank" name="bank">
+                                        <option id="bank" value="" disabled selected>Wybierz bank</option>
                                         {% for e in banks %}
                                             <optgroup label="Banki">
                                                 <option value="{{ e.id }}">{{ e.name }}</option>

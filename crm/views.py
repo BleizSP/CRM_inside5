@@ -1,12 +1,11 @@
 import datetime
 
-from django.db.models import Count, Q, Avg, Sum
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render
 import sweetify
 
 # Create your views here.
-from crm.models import Employee, Bank, Status, Client, Operation
+from crm import models
+from crm.models import Employee, Bank, Status, Client, Operation, Office
 
 
 def new_bank(request):
@@ -22,7 +21,7 @@ def new_bank(request):
 
         data = Bank(
             name=nn, type=tp, iban=ib, wallet=wl, owner=ac, swift=sw, country=co, adres=ad,
-            reg_date=datetime.date.today(), status=True
+            reg_date=datetime.date.today(), active=True
         )
 
         data.save()
@@ -42,6 +41,8 @@ def company_summary(request):
 
 
 def new_employee(request):
+    office = Office.objects.all()
+
     if request.method == "POST":
         nm = request.POST['firstname']
         ln = request.POST['lastname']
@@ -58,7 +59,7 @@ def new_employee(request):
         sweetify.success(request, 'Gratulacje!',
                          text='Dobra robota, właśnie dodałeś: ' + nm + ' ' + ln + ' jako pracownika grupy: ' + of)
 
-    return render(request, 'new_employees.html')
+    return render(request, 'new_employees.html', {'office': office})
 
 
 def new_client(request):
@@ -111,6 +112,23 @@ def new_operation(request):
     posr = Bank.objects.filter(type='posrednik')
     crypto = Bank.objects.filter(type='crypto')
 
+    if request.method == 'POST':
+        cl = request.POST['client']
+        ss = request.POST['salesman']
+        tr = request.POST['trans']
+        cs = request.POST['cash']
+        dd = request.POST['date']
+        ba = request.POST['bank']
+
+        data = Operation(
+            cash=cs, date=dd, type=tr,
+            bank_id=ba, client_id=cl, status_id=4, who_id=ss
+        )
+        data.save()
+        sweetify.info(request, 'Gratulacje!',
+                      text='Dobra robota, właśnie dodałeś operacje, klient: ' + cl
+                           + ' zrobił: ' + tr + ' na kwotę: ' + cs)
+
     return render(request, 'new_operation.html', {'client': client, 'status': status, 'employee': employee,
                                                   'posr': posr, 'banks': banks, 'crypto': crypto})
 
@@ -118,7 +136,27 @@ def new_operation(request):
 def client_list(request):
     employee = Employee.objects.all()
     clients_list = Client.objects.all()
-    operation = Operation.objects.all()
 
     return render(request, 'client_list.html', {'clients_list': clients_list,
                                                 'employee': employee})
+
+
+def employees_list(request):
+    employee = Employee.objects.all()
+
+    return render(request, 'employee_list.html', {'employee': employee})
+
+
+def new_office(request):
+    if request.method == 'POST':
+        nm = request.POST['office_name']
+        ln = request.POST['country']
+
+        data = Office(
+            name=nm, country=ln
+        )
+        data.save()
+        sweetify.success(request, 'Gratulacje!',
+                         text='Dobra robota, właśnie dodałeś nowe biuro: ' + nm + ' z kraju: ' + ln)
+
+    return render(request, 'new_office.html')

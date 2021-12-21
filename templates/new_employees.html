@@ -71,9 +71,9 @@
                                     <div>
                                     <select class="multiselect-dropdown form-control" name='office' id="office">
                                         <option value="" disabled selected>Wybierz biuro:</option>
-                                            <option value="IgroIB">Igor IB</option>
-                                            <option value="FilipeIBn">Filipe IB</option>
-                                            <option value="GermanyIB">Germany IB</option>
+                                        {%  for o in office %}
+                                            <option value="{{ o.id }}">{{ o.name }}</option>
+                                        {% endfor %}
                                     </select>
                                     </div>
                                 </div>
