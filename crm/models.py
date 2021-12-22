@@ -56,6 +56,7 @@ class Client(models.Model):
     salesman = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='salesman')
     retention = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='retention')
     reg_time = models.DateField(blank=True, null=True)
+    client_cash = models.ForeignKey('Operation', on_delete=models.CASCADE, related_name="clientcash")
 
 
 class Status(models.Model):
@@ -90,14 +91,14 @@ class Bank(models.Model):
 
 
 class Operation(models.Model):
-    def __str__(self):
-        return self.client.name + ' ' + self.client.lastname + '  Cash: ' + str(self.cash)
+    # def __str__(self):
+    #     return self.client.name + ' ' + self.client.lastname + '  Cash: ' + str(self.cash)
 
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='operations')
     cash = models.DecimalField(max_digits=12, decimal_places=2)
     date = models.DateField(blank=True, null=True)
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE, related_name='bank')
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name='stat')
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
     who = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='ftd_employees', null=True, blank=True)
     type = models.CharField(max_length=20)
 

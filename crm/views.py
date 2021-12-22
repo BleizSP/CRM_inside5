@@ -1,5 +1,6 @@
 import datetime
 
+from django.db.models import Count, Sum, Q
 from django.shortcuts import render
 import sweetify
 
@@ -135,7 +136,9 @@ def new_operation(request):
 
 def client_list(request):
     employee = Employee.objects.all()
-    clients_list = Client.objects.all()
+    # clients_list = Client.objects.all()
+
+    clients_list = Client.objects.annotate(depo=Sum('operations__cash', filter=Q(operations__status=4)))
 
     return render(request, 'client_list.html', {'clients_list': clients_list,
                                                 'employee': employee})
