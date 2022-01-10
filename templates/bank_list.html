@@ -1,0 +1,158 @@
+{%  extends 'masterpage.html' %}
+{% load static %}
+
+{% block mainblock %}
+    <div class="app-page-title">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-heading">
+                                <div class="page-title-icon">
+                                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+                                </div>
+                                <div>Lista wszystkich metod płatności
+                                    <div class="page-title-subheading">Listę metod płatności możesz segregować według własnego uznania, tak samo wyszukiwać klientów, i sprawdzać ich statystyki.
+                                        <br> W nawiasach jest podana ilość razy. <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page-title-actions">
+                            </div>
+                        </div>
+    </div>
+
+
+
+<div class="app-main__inner">
+
+<div class="row">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="widget-chart widget-chart2 text-left mb-3 card-btm-border card-shadow-primary border-primary card">
+                                <div class="widget-chat-wrapper-outer">
+                                    <div class="widget-chart-content">
+                                        <div class="widget-title opacity-5 text-uppercase">All payment methods</div>
+                                        <div class="widget-numbers mt-2 fsize-4 mb-0 w-100">
+                                            <div class="widget-chart-flex align-items-center">
+                                                <div>
+                                                    <span class="opacity-10 text-success pr-2">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>
+                                                    {{ bank.count }}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="widget-chart widget-chart2 text-left mb-3 card-btm-border card-shadow-danger border-danger card">
+                                <div class="widget-chat-wrapper-outer">
+                                    <div class="widget-chart-content">
+                                        <div class="widget-title opacity-5 text-uppercase">Inactive payment methods</div>
+                                        <div class="widget-numbers mt-2 fsize-4 mb-0 w-100">
+                                            <div class="widget-chart-flex align-items-center">
+                                                <div>
+                                                    <span class="opacity-10 text-danger pr-2">
+                                                        <i class="fa fa-angle-down"></i>
+                                                    </span>
+                                                    {{ bank.count }}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="widget-chart widget-chart2 text-left mb-3 card-btm-border card-shadow-warning border-warning card">
+                                <div class="widget-chat-wrapper-outer">
+                                    <div class="widget-chart-content">
+                                        <div class="widget-title opacity-5 text-uppercase">All operations</div>
+                                        <div class="widget-numbers mt-2 fsize-4 mb-0 w-100">
+                                            <div class="widget-chart-flex align-items-center">
+                                                <div>
+                                                    <span class="opacity-10 text-success pr-2">
+                                                        <i class="fa fa-angle-double-up"></i>
+                                                    </span>
+                                                    {{ operation.count }}
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="widget-chart widget-chart2 text-left mb-3 card-btm-border card-shadow-success border-success card">
+                                <div class="widget-chat-wrapper-outer">
+                                    <div class="widget-chart-content">
+                                        <div class="widget-title opacity-5 text-uppercase">Active payment methods</div>
+                                        <div class="widget-numbers mt-2 fsize-4 mb-0 w-100">
+                                            <div class="widget-chart-flex align-items-center">
+                                                <div>
+                                                    <small class="fa fa-angle-up text-success pr-1"></small>
+                                                    {{ bank.count }}
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                        <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>Banki</div>
+                        <div tabindex="-1" class="dropdown-divider"></div>
+                            <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#id</th>
+                                    <th>Nazwa</th>
+                                    <th>Data dodania</th>
+                                    <th>Ilość operacji</th>
+                                    <th>Wpłaty</th>
+                                    <th>Wypłaty</th>
+                                    <th>Bilans</th>
+                                    <th>Status</th>
+                                    <th>Akcja</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {%  for c in bank %}
+                                <tr>
+                                    <td>{{ c.pk }}</td>
+                                    <td>{{ c.name }}</td>
+                                    <td>{{ c.reg_date }}</td>
+                                    <td>{{ c.bank_amount_operation_count }}</td>
+                                    <td>€ {{ c.bank_amount_depo }}</td>
+                                    <td>€ {{c.bank_amount_wd}}</td>
+                                    <td>€ {{ c.bank_amount_bilans }}</td>
+                                    <td>{{ c.active}}</td>
+                                    <td>
+
+                                        <form method="POST">
+                                            {%  csrf_token %}
+                                            <input type="hidden" value="{{ c.id }}" name="bank-id">
+                                            <button type="submit" class="mb-2 mr-2 btn btn-shadow btn-success">Check
+                                            </button>
+                                        </form>
+
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+
+                                </tbody>
+                                <tfoot>
+
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}

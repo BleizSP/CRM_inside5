@@ -11,4 +11,10 @@ urlpatterns = [
     path('NewBank', views.new_bank, name='new_bank'),
     path('EmployeesList', views.employees_list, name='employees_list'),
     path('NewOffice', views.new_office, name='new_office'),
+    path('OfficeList', views.office_list, name='office_list'),
+    path('PendingOperations', views.pending_operations, name='pending_operations'),
+    path('NewMenager', views.new_menago, name='new_menago'),
+    path('BankList', views.bank_list, name='bank_list'),
+    path('Bank/<int:bank_id>/', views.bank, name='bank'),
+    path('Client/<int:client_id>/', views.client, name='client'),
 ]

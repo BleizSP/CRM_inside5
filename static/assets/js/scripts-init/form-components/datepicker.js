@@ -49,7 +49,7 @@ $( document ).ready(function() {
     });
 
 
-    var start = moment().subtract(29, 'days');
+    var start = moment(1, "DD");
     var end = moment();
 
     function cb(start, end) {
@@ -67,7 +67,8 @@ $( document ).ready(function() {
             'Last 30 Days': [moment().subtract(29, 'days'), moment()],
             'This Month': [moment().startOf('month'), moment().endOf('month')],
             'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
+        },
+        "alwaysShowCalendars": true,
     }, cb);
 
     cb(start, end);
@@ -78,8 +79,6 @@ $( document ).ready(function() {
         "cancelClass": "btn-link bg-transparent rm-border text-danger",
         "opens": "center",
         "drops": "up",
-        "startDate": "12/12/2018",
-        "endDate": "12/18/2018",
     });
 
 });

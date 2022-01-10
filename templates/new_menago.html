@@ -8,8 +8,8 @@
                                 <div class="page-title-icon">
                                     <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                                 </div>
-                                <div>Dodaj nowego pracownika
-                                    <div class="page-title-subheading">Uzupełnij wszystkie potrzebne dane, a pracownik zostanie dodany do bazy danych.</div>
+                                <div>Dodaj nowego Menagdżera
+                                    <div class="page-title-subheading">Uzupełnij wszystkie potrzebne dane, a menadzer zostanie dodany do bazy danych.</div>
                                 </div>
                             </div>
                             <div class="page-title-actions">
@@ -19,23 +19,23 @@
 
 <div class="main-card mb-3 card">
                         <div class="card-body">
-                            <h5 class="card-title">Uzupełnij dane pracownika:</h5>
+                            <h5 class="card-title">Uzupełnij dane menadżera:</h5>
                             <div class="divider"></div>
-                            Każdy pracownik jest automatycznie dodawany do bazy pracowników, w liście pracowników możesz go awansować lub zdegradować, tak samo zmienić status na nie aktywny.
+                            Każdy menadżer jest automatycznie dodawany do bazy pracowników, w liście pracowników możesz go awansować lub zdegradować, tak samo zmienić status na nie aktywny.
                             <div class="divider"></div>
                             <form id="signupForm" class="col-md-10 mx-auto" method="post" action="">
                                 {%  csrf_token %}
                                 <div class="form-group">
                                     <label for="firstname">Imię:</label>
                                     <div>
-                                        <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Imię pracownika"/>
+                                        <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Imię menadzera"/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="lastname">Nazwisko:</label>
                                     <div>
-                                        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Nazwisko pracownika"/>
+                                        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Nazwisko menadzera"/>
                                     </div>
                                 </div>
 
@@ -54,40 +54,16 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="range">Ranga:</label>
+                                    <label for="office">Biuro:</label>
                                     <div>
-                                    <select class="multiselect-dropdown form-control" name='range' id="range">
-                                        <option value="" disabled selected>Wybierz rangę:</option>
-                                            <option value="salesman">Sprzedawca</option>
-                                            <option value="retention">Retencja</option>
-                                    </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="office">Menager:</label>
-                                    <div>
-
-                                    <select class="multiselect-dropdown form-control" name='menago' id="menago">
-                                        <option value="" disabled selected>Choose menager</option>
-                                        {% for c in office %}
-
-                                        <optgroup label="{{ c.name }}">
-                                            {% for e in menago %}
-                                                {% if e.office_id == c.pk %}
-                                                   <option value="{{ e.pk }}"> &nbsp; {{ e.name }} {{ e.lastname }}</option>
-                                                {% endif %}
-                                            {% endfor %}
+                                    <select class="multiselect-dropdown form-control" name='office' id="office">
+                                        <option value="" disabled selected>Wybierz biuro:</option>
+                                        {%  for o in office %}
+                                            <option value="{{ o.id }}">{{ o.name }}</option>
                                         {% endfor %}
-                                        </optgroup>
-
                                     </select>
-
                                     </div>
                                 </div>
-
-
-
 
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary" name="signup" value="Sign up">Dodaj Pracownika!</button>

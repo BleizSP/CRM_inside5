@@ -59,17 +59,37 @@
                                     <div>
                                     <select class="multiselect-dropdown form-control" name='salesman' id="salesman">
                                         <option value="" disabled selected>Wybierz sprzedawcę</option>
-                                        <optgroup label="Biuro 1">
+                                        {% for c in office %}
+
+                                        <optgroup label="{{ c.name }}">
                                             {% for e in employee %}
-                                            <option value="{{ e.id }}">{{ e.id }}: {{ e.name }} {{ e.lastname }}</option>
+                                                {% if e.office_id == c.pk %}
+                                                   <option value="{{ e.pk }}"> &nbsp; {{ e.name }} {{ e.lastname }}</option>
+                                                {% endif %}
                                             {% endfor %}
+                                        {% endfor %}
                                         </optgroup>
-{#                                        <optgroup label="Biuro 2">#}
-{#                                            <option value="CA">California</option>#}
-{#                                            <option value="NV">Nevada</option>#}
-{#                                            <option value="OR">Oregon</option>#}
-{#                                            <option value="WA">Washington</option>#}
-{#                                        </optgroup>#}
+
+                                    </select>
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                    <label for="email">Retencja:</label>
+                                    <div>
+                                    <select class="multiselect-dropdown form-control" name='retention' id="retention">
+                                        <option value="" disabled selected>Wybierz retencje</option>
+                                        {% for c in office %}
+
+                                        <optgroup label="{{ c.name }}">
+                                            {% for e in employee %}
+                                                {% if e.office_id == c.pk %}
+                                                   <option value="{{ e.pk }}">&nbsp; {{ e.name }} {{ e.lastname }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                        </optgroup>
+
                                     </select>
                                     </div>
                                 </div>
@@ -100,19 +120,19 @@
 
                                         {% for e in banks %}
                                             <optgroup label="Banki">
-                                                <option value="{{ e.id }}">{{ e.name }}</option>
+                                                <option value="{{ e.id }}">&nbsp; {{ e.name }}</option>
                                             </optgroup>
-                                            {% endfor %}
-                                    {% for e in posr %}
+                                        {% endfor %}
+                                        {% for e in posr %}
                                             <optgroup label="Pośrednicy">
-                                                <option value="{{ e.id }}">{{ e.name }}</option>
+                                                <option value="{{ e.id }}"> &nbsp;{{ e.name }}</option>
                                             </optgroup>
-                                            {% endfor %}
-                                    {% for e in crypto %}
+                                        {% endfor %}
+                                        {% for e in crypto %}
                                             <optgroup label="Kryptowaluty">
-                                                <option value="{{ e.id }}">{{ e.name }}</option>
+                                                <option value="{{ e.id }}">&nbsp; {{ e.name }}</option>
                                             </optgroup>
-                                            {% endfor %}
+                                        {% endfor %}
                                     </select>
                                     </div>
                                 </div>

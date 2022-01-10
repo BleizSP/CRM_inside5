@@ -1,12 +1,11 @@
 import datetime
 
-from django.db.models import Count, Sum, Q
-from django.shortcuts import render
+from django.db.models import Sum
+from django.shortcuts import render, get_object_or_404, redirect
 import sweetify
 
 # Create your views here.
-from crm import models
-from crm.models import Employee, Bank, Status, Client, Operation, Office
+from crm.models import Employee, Bank, Status, Client, Operation, Office, Menager
 
 
 def new_bank(request):
@@ -43,6 +42,7 @@ def company_summary(request):
 
 def new_employee(request):
     office = Office.objects.all()
+    menago = Menager.objects.all()
 
     if request.method == "POST":
         nm = request.POST['firstname']
@@ -50,21 +50,22 @@ def new_employee(request):
         ph = request.POST['telephone']
         em = request.POST['email']
         rk = request.POST['range']
-        of = request.POST['office']
+        mn = request.POST['menago']
 
         data = Employee(
             name=nm, lastname=ln, phone=ph, email=em,
-            rank=rk, group=of
+            rank=rk, office=office.get(menager=mn), manager_id=mn
         )
         data.save()
         sweetify.success(request, 'Gratulacje!',
-                         text='Dobra robota, właśnie dodałeś: ' + nm + ' ' + ln + ' jako pracownika grupy: ' + of)
+                         text='Dobra robota, właśnie dodałeś: ' + nm + ' ' + ln + ' jako pracownika menadżera: ' + mn)
 
-    return render(request, 'new_employees.html', {'office': office})
+    return render(request, 'new_employees.html', {'office': office, 'menago': menago})
 
 
 def new_client(request):
     employee = Employee.objects.all()
+    office = Office.objects.all()
 
     banks = Bank.objects.filter(type='bank')
     posr = Bank.objects.filter(type='posrednik')
@@ -76,13 +77,14 @@ def new_client(request):
         ph = request.POST['telephone']
         em = request.POST['email']
         ss = request.POST['salesman']
+        ret = request.POST['retention']
         f_date = request.POST['ftd_date']
         f_bank = request.POST['ftd_bank']
 
         data = Client(
             name=nm, lastname=ln, phone=ph,
             email=em, salesman=Employee.objects.get(pk=ss), reg_time=f_date,
-            retention=Employee.objects.get(pk=ss)
+            retention=Employee.objects.get(pk=ret)
         )
 
         data.save()
@@ -93,21 +95,25 @@ def new_client(request):
             bank=Bank.objects.get(pk=f_bank),
             date=request.POST['ftd_date'],
             status=Status.objects.get(pk=1),
-            who=Employee.objects.get(pk=ss)
+            who=Employee.objects.get(pk=ss),
+            type=Status.objects.get(pk=4)
         )
 
         data.save()
 
         sweetify.info(request, 'Gratulacje!',
-                      text='Dobra robota, właśnie dodałeś klienta: ' + nm + ' ' + ln + '  - Klient musi zostać zaakceptowany przez menagera.')
+                      text='Dobra robota, właśnie dodałeś klienta: ' + nm +
+                           ' ' + ln + '  - Klient musi zostać zaakceptowany przez menagera.')
 
-    return render(request, 'new_client.html', {'employee': employee, 'posr': posr, 'banks': banks, 'crypto': crypto})
+    return render(request, 'new_client.html', {'employee': employee, 'posr': posr, 'banks': banks, 'crypto': crypto,
+                                               'office': office})
 
 
 def new_operation(request):
     client = Client.objects.all()
     status = Status.objects.all()
     employee = Employee.objects.all()
+    office = Office.objects.all()
 
     banks = Bank.objects.filter(type='bank')
     posr = Bank.objects.filter(type='posrednik')
@@ -122,8 +128,8 @@ def new_operation(request):
         ba = request.POST['bank']
 
         data = Operation(
-            cash=cs, date=dd, type=tr,
-            bank_id=ba, client_id=cl, status_id=4, who_id=ss
+            cash=cs, date=dd, type_id=tr,
+            bank_id=ba, client_id=cl, status_id=1, who_id=ss
         )
         data.save()
         sweetify.info(request, 'Gratulacje!',
@@ -131,23 +137,35 @@ def new_operation(request):
                            + ' zrobił: ' + tr + ' na kwotę: ' + cs)
 
     return render(request, 'new_operation.html', {'client': client, 'status': status, 'employee': employee,
-                                                  'posr': posr, 'banks': banks, 'crypto': crypto})
+                                                  'posr': posr, 'banks': banks, 'crypto': crypto, 'office': office})
 
 
 def client_list(request):
     employee = Employee.objects.all()
-    # clients_list = Client.objects.all()
-
-    clients_list = Client.objects.annotate(depo=Sum('operations__cash', filter=Q(operations__status=4)))
+    transaction = Operation.objects.all()
+    clients_list = Client.objects.all().filter(active=True)
 
     return render(request, 'client_list.html', {'clients_list': clients_list,
-                                                'employee': employee})
+                                                'employee': employee,
+                                                'transaction': transaction})
 
 
 def employees_list(request):
     employee = Employee.objects.all()
+    menago = Menager.objects.all()
+    total_wd = Operation.objects.filter(status_id=5).filter(type_id=3).aggregate(Sum('cash')).get('cash__sum')
+    total_depo = Operation.objects.filter(status_id=5).aggregate(Sum('cash')).get('cash__sum') - total_wd
+    total_balance = Operation.objects.filter(status_id=5).aggregate(Sum('cash')).get('cash__sum') - (2 * total_wd)
 
-    return render(request, 'employee_list.html', {'employee': employee})
+    context = {
+        'employee': employee,
+        'total_depo': total_depo,
+        'total_wd': total_wd,
+        'total_balance': total_balance,
+        'menago': menago,
+    }
+
+    return render(request, 'employee_list.html', context)
 
 
 def new_office(request):
@@ -163,3 +181,87 @@ def new_office(request):
                          text='Dobra robota, właśnie dodałeś nowe biuro: ' + nm + ' z kraju: ' + ln)
 
     return render(request, 'new_office.html')
+
+
+def office_list(request):
+    operation = Operation.objects.all().filter(status_id=1)
+    office = Office.objects.all()
+
+    return render(request, 'office_list.html', {'office': office, 'operation': operation})
+
+
+def pending_operations(req):
+    operation = Operation.objects.all().filter(status_id=1)
+
+    if req.method == 'POST':
+        pending_accept = Operation.objects.get(pk=req.POST['accepted-id'])
+        pending_accept.status_id = 5
+        pending_accept.save(update_fields=['status_id'])
+
+        sweetify.success(req, 'Gratulacje!',
+                         text='Zatwierdzono! ' + pending_accept.client.name + ' ' + pending_accept.client.lastname)
+
+    return render(req, 'pending_operations.html', {'operation': operation})
+
+
+def new_menago(req):
+    office = Office.objects.all()
+
+    if req.method == 'POST':
+        nm = req.POST['firstname']
+        ln = req.POST['lastname']
+        ph = req.POST['telephone']
+        em = req.POST['email']
+        of = req.POST['office']
+
+        data = Menager(
+            name=nm, lastname=ln, email=em, phone=ph, office_id=of, reg_time=datetime.date.today()
+        )
+        data.save()
+
+        sweetify.success(req, 'Gratulacje!',
+                         text='Dobra robota, właśnie dodałeś nowego menadżera: ' + nm + ' ' + ln)
+
+    return render(req, 'new_menago.html', {'office': office})
+
+
+def bank_list(req):
+    operation = Operation.objects.all()
+    bank = Bank.objects.all()
+
+    contex = {
+        'operation': operation,
+        'bank': bank,
+    }
+
+    if req.method == 'POST':
+        bank = Bank.objects.get(pk=req.POST['bank-id'])
+        return redirect('bank', bank_id=bank.id)
+
+    return render(req, 'bank_list.html', contex)
+
+
+def bank(request, bank_id):
+    bank = get_object_or_404(Bank, pk=bank_id)
+    operation = Operation.objects.filter(bank_id=bank.id)
+
+    context = {
+        'bank': bank,
+        'operation': operation,
+    }
+
+    return render(request, 'bank.html', context)
+
+
+def client(request, client_id):
+    Client.objects.all()
+
+    if request.method == 'POST':
+        client = Client.objects.get(pk=request.POST['client-id'])
+        return redirect('client', client_id=client.id)
+
+    context = {
+        'client': client
+    }
+
+    return render(request, 'client.html', context)

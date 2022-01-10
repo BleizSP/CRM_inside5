@@ -1,4 +1,5 @@
 {%  load static %}
+{% load extra_tags %}
 <!doctype html>
 <html lang="en">
 
@@ -964,51 +965,6 @@
                                             </i>Podsumowanie firmy
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="commerce.html">
-                                            <i class="metismenu-icon">
-                                            </i>Commerce
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="sales.html">
-                                            <i class="metismenu-icon">
-                                            </i>Sales
-                                        </a>
-                                    </li>
-                                    <li
-                                        
-                                        
-                                    >
-                                        <a href="#">
-                                            <i class="metismenu-icon"></i>
-                                            Minimal
-                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                        </a>
-                                        <ul
-                                            
-                                            
-                                        >
-                                            <li>
-                                                <a href="minimal-1.html">
-                                                    <i class="metismenu-icon">
-                                                    </i>Variation 1
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="minimal-2.html">
-                                                    <i class="metismenu-icon">
-                                                    </i>Variation 2
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="crm.html">
-                                            <i class="metismenu-icon"></i>
-                                            CRM
-                                        </a>
-                                    </li>
                                 </ul>
                             </li>
                             <li
@@ -1024,50 +980,7 @@
                                     Podsumowanie biur
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
-                                <ul
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                >
-                                    <li>
-                                        <a href="login.html">
-                                            <i class="metismenu-icon"></i>
-                                            Login
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="login-boxed.html">
-                                            <i class="metismenu-icon">
-                                            </i>Login Boxed
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="register.html">
-                                            <i class="metismenu-icon">
-                                            </i>Register
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="register-boxed.html">
-                                            <i class="metismenu-icon">
-                                            </i>Register Boxed
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="forgot-password.html">
-                                            <i class="metismenu-icon">
-                                            </i>Forgot Password
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="forgot-password-boxed.html">
-                                            <i class="metismenu-icon">
-                                            </i>Forgot Password Boxed
-                                        </a>
-                                    </li>
+                                <ul>
                                 </ul>
                             </li>
                             <li
@@ -1097,7 +1010,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="regular.html">
+                                        <a href="{% url 'bank_list' %}">
                                             <i class="metismenu-icon">
                                             </i>Lista banków
                                         </a>
@@ -1131,6 +1044,7 @@
                                     </li>
                                 </ul>
                                 </li>
+                                </li>
                             <li>
                                 <a href="#">
                                     <i class="metismenu-icon pe-7s-display2"></i>
@@ -1139,9 +1053,10 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{% url 'pending_operations' %}">
                                     <i class="metismenu-icon pe-7s-display2"></i>
                                     Oczekujące operacje
+                                    <span class="badge badge-pill badge-warning">{% pending_aproved %}</span>
                                     <i class="metismenu-state-icon pe-7s-angle-right caret-left"></i>
                                 </a>
                             </li>
@@ -1155,7 +1070,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{% url 'office_list' %}">
                                     <i class="metismenu-icon pe-7s-car"></i>
                                     Lista biur
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
@@ -1190,10 +1105,26 @@
                             </li>
                             <li class="app-sidebar__heading">Pracownicy</li>
                             <li>
-                                <a href="{% url 'new_employee' %}">
-                                    <i class="metismenu-icon pe-7s-graph">
-                                    </i>Dodaj pracownika
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-display2"></i>
+                                    Dodaj pracownika
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'new_menago' %}">
+                                            <i class="metismenu-icon">
+                                            </i>Dodaj menagera
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'new_employee' %}">
+                                            <i class="metismenu-icon">
+                                            </i>Dodaj sprzedawcę/retencje
+                                        </a>
+                                    </li>
+
+                                </ul>
                             </li>
                             <li>
                                 <a href="{% url 'employees_list' %}">
@@ -1702,8 +1633,8 @@
 <!--SCRIPTS INCLUDES-->
 
 <!--CORE-->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/metismenu"></script>
 <script src="{% static '/assets/js/scripts-init/app.js' %}"></script>
 <script src="{% static '/assets/js/scripts-init/demo.js' %}"></script>
@@ -1733,9 +1664,13 @@
 
 <!--Datepickers-->
 <script src="{% static '/assets/js/vendors/form-components/datepicker.js' %}"></script>
-<script src="{% static '/assets/js/vendors/form-components/daterangepicker.js' %}"></script>
-<script src="{% static '/assets/js/vendors/form-components/moment.js' %}"></script>
 <script src="{% static '/assets/js/scripts-init/form-components/datepicker.js' %}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
 <!--Multiselect-->
 <script src="{% static '/assets/js/vendors/form-components/bootstrap-multiselect.js' %}"></script>
@@ -1825,7 +1760,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{% static '/assets/js/scripts-init/sweet-alerts.js' %}"></script>
 
-<script src="{% static '/assets/js/scripts-init/sweetalert2.min.js' %}"></script>
+<script src="{% static '/assets/js/scripts-init/sweetalert2.all.min.js' %}"></script>
 <link rel="stylesheet" href="{% static '/assets/css/sweetalert2.min.css' %}">
 
 <!--Tree View -->
@@ -1834,20 +1769,25 @@
 
 
 <!--TABLES -->
+
+
 <!--DataTables-->
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/datatables.net-bs4@1.10.19/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js" crossorigin="anonymous"></script>
 
+{#--- Export table ---#}
+
 <!--Bootstrap Tables-->
+
+{#--- Boostrap Table ---#}
 <script src="{% static '/assets/js/vendors/tables.js' %}"></script>
-
 <script src="{% static '/assets/js/scripts-init/hide-div.js' %}"></script>
-
 
 <!--Tables Init-->
 <script src="{% static '/assets/js/scripts-init/tables.js' %}"></script>
+
     {% load sweetify %}
 {% sweetify %}
 </body>

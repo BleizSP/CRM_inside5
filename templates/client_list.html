@@ -37,7 +37,7 @@
                                     <th>Biuro</th>
                                     <th>Data rejestracji</th>
                                     <th>FTD</th>
-                                    <th>Wpłaty</th>
+                                    <th>Redepo</th>
                                     <th>Wypłaty</th>
                                     <th>Bilans</th>
                                 </tr>
@@ -51,11 +51,12 @@
                                     <td>{{ c.phone }}</td>
                                     <td>{{ c.salesman.name }} {{ c.salesman.lastname }}</td>
                                     <td>{{ c.retention.name }} {{ c.retention.lastname }}</td>
-                                    <td>{{ c.phone }}</td>
+                                    <td>{{ c.office }}</td>
                                     <td>{{ c.reg_time }}</td>
-                                    <td>{{ c.operations }} ({{ c.operations.count }})</td>
-                                    <td>{{ c.client_cash.cash }}</td>
-                                    <td></td>
+                                    <td>{{ c.stats_ftd }} €</td>
+                                    <td>{{ c.stats_depo }} ({{ c.operations.count }}) €</td>
+                                    <td>{{ c.stats_wd }} €</td>
+                                    <td>{{ c.stats_all }} €</td>
                                     {% endfor %}
                                 </tr>
 

@@ -1,0 +1,79 @@
+{%  extends 'masterpage.html' %}
+{% load static %}
+
+{% block mainblock %}
+    <div class="app-page-title">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-heading">
+                                <div class="page-title-icon">
+                                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+                                </div>
+                                <div>Lista wszystkich biur i ich wyniki.
+                                    <div class="page-title-subheading">Listę biur możesz segregować według własnego uznania, tak samo wyszukiwać biura, i sprawdzać ich statystyki.
+                                        <br> W nawiasach jest podana ilość razy. <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page-title-actions">
+                            </div>
+                        </div>
+    </div>
+
+
+
+<div class="app-main__inner">
+
+    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <table style="width: 100%;" class="table table-bordered table-hover"
+                            data-toggle="table"
+                            data-pagination="true"
+                            data-search="true"
+                            data-loading="true"
+                            data-show-export="true">
+                                <thead>
+                                <tr>
+                                    <th>#id</th>
+                                    <th>Nazwa</th>
+                                    <th>Kraj</th>
+                                    <th>Ilość pracowników</th>
+                                    <th>Ilość klientów</th>
+                                    <th>FTD</th>
+                                    <th>Redeposit</th>
+                                    <th>Wypłaty</th>
+                                    <th>Bilans</th>
+                                    <th>Akcja</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {%  for c in office %}
+                                <tr>
+                                    <td>{{ c.id }}</td>
+                                    <td>{{ c.name }}</td>
+                                    <td>{{ c.country }}</td>
+                                    <td>{{ c.employee_count }}</td>
+                                    <td>{{ c.client_count }}</td>
+                                    <td>{{ c.client_ammount_ftd }} € ({{ c.office_client_ammount_ftd_count }})</td>
+                                    <td>{{ c.client_ammount_redepo }} € ({{ c.office_client_ammount_redepo_count }})</td>
+                                    <td>{{ c.client_ammount_wd }} € ({{ c.office_client_ammount_wd_count }})</td>
+                                    <td>{{ c.client_ammount_bilans }} €</td>
+                                    <td>
+                                        <form method="POST">
+                                            {%  csrf_token %}
+                                            <input type="hidden" value="{{ c.id }}" name="accepted-id">
+                                            <button type="submit" class="mb-2 mr-2 btn btn-shadow btn-success">Check
+                                            </button>
+                                        </form>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+
+                                </tbody>
+                                <tfoot>
+
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}

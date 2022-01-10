@@ -1,0 +1,79 @@
+{%  extends 'masterpage.html' %}
+{% load static %}
+
+{% block mainblock %}
+    <div class="app-page-title">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-heading">
+                                <div class="page-title-icon">
+                                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+                                </div>
+                                <div>Lista oczekujących transakcji do zaakceptowania
+                                    <div class="page-title-subheading">Listę transakcji możesz segregować według własnego uznania, tak samo wyszukiwać.
+                                        <br> W nawiasach jest podana ilość razy. <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page-title-actions">
+                            </div>
+                        </div>
+    </div>
+
+
+
+<div class="app-main__inner">
+
+    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#id</th>
+                                    <th>Klient</th>
+                                    <th>Email</th>
+                                    <th>Obsługa</th>
+                                    <th>Biuro</th>
+                                    <th>Data operacji</th>
+                                    <th>Typ operacji</th>
+                                    <th>Metoda płatności</th>
+                                    <th>Kwota</th>
+                                    <th>Status</th>
+                                    <th>Akcja</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {%  for c in operation %}
+                                <tr>
+                                    {{ stats_pend_aprov.count }}
+                                    <td>{{ c.id }}</td>
+                                    <td>{{ c.client.name }} {{ c.client.lastname }} </td>
+                                    <td>{{ c.client.email }}</td>
+                                    <td>{{ c.who.name }} {{ c.who.lastname }}</td>
+                                    <td>{{ c.client.office }}</td>
+                                    <td>{{ c.date }}</td>
+                                    <td>{{ c.bank}}</td>
+                                    <td>{{ c.type }}</td>
+                                    <td>{{ c.cash }} €</td>
+                                    <td>{{ c.status }}</td>
+                                    <td>
+
+                                        <form method="POST">
+                                            {%  csrf_token %}
+                                            <input type="hidden" value="{{ c.id }}" name="accepted-id">
+                                            <button type="submit" class="mb-2 mr-2 btn btn-shadow btn-success">Accept
+                                            </button>
+                                        </form>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+
+                                </tbody>
+                                <tfoot>
+
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}
